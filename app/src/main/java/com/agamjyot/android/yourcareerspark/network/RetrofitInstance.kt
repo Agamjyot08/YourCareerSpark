@@ -1,0 +1,30 @@
+package com.agamjyot.android.yourcareerspark.network
+
+import com.agamjyot.android.yourcareerspark.models.JobResponse
+import com.agamjyot.android.yourcareerspark.utils.Constants.BASE_URL
+import okhttp3.logging.HttpLoggingInterceptor
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
+import okhttp3.OkHttpClient
+
+class RetrofitInstance {
+
+    companion object {
+        private val retrofit by lazy {
+            val logging = HttpLoggingInterceptor()
+            logging.setLevel(HttpLoggingInterceptor.Level.BODY)
+
+            val client = OkHttpClient.Builder().addInterceptor(logging)
+                .build()
+
+            Retrofit.Builder().baseUrl(BASE_URL).addConverterFactory(GsonConverterFactory.create())
+                .client(client).build()
+
+        }
+
+        val apiService: JobService by lazy {
+            retrofit.create(JobService::class.java)
+        }
+
+    }
+}
