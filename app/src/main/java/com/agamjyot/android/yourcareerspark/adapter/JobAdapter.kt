@@ -40,17 +40,17 @@ class JobAdapter : RecyclerView.Adapter<JobAdapter.JobViewHolder>() {
         val currentJob = differ.currentList[position]
         Log.d("LOGTAG", "logtag $currentJob")
         holder.itemView.apply {
-            binding?.tvCompanyName?.text = currentJob.company_name
+            binding?.tvCompanyName?.text = currentJob.companyName
             binding?.tvJobTitle?.text = currentJob.title
-            binding?.tvJobType?.text = currentJob.job_type
-            binding?.tvJobLocation?.text = currentJob.candidate_required_location
+            binding?.tvJobType?.text = currentJob.jobType
+            binding?.tvJobLocation?.text = currentJob.candidateRequiredLocation
 
-            val date = currentJob.publication_date.split("T")
-            binding?.tvDate?.text = date[0]
+            val date = currentJob.publicationDate?.split("T")
+            binding?.tvDate?.text = date?.get(0)
 
-            Glide.with(this).load(currentJob.company_logo).into(binding?.ivCompanyLogo ?: return@apply)
+            Glide.with(this).load(currentJob.companyLogoUrl).into(binding?.ivCompanyLogo!!)
         }.setOnClickListener {view ->
-            val direction = MainFragmentDirections.actionMainFragmentToJobDetailsViewsFragment()
+            val direction = MainFragmentDirections.actionMainFragmentToJobDetailsFragment(currentJob)
             view.findNavController().navigate(direction)
         }
     }

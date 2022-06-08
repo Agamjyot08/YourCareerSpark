@@ -17,8 +17,7 @@ import com.agamjyot.android.yourcareerspark.viewmodel.JobViewModel
 
 class JobFragment : Fragment(R.layout.fragment_job) {
 
-    private var _binding: FragmentJobBinding? = null
-    private val binding get() = _binding!!
+    private lateinit var binding: FragmentJobBinding
     lateinit var viewModel: JobViewModel
     private lateinit var jobAdapter: JobAdapter
 
@@ -26,7 +25,7 @@ class JobFragment : Fragment(R.layout.fragment_job) {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentJobBinding.inflate(
+        binding = FragmentJobBinding.inflate(
             inflater,
             container,
             false
@@ -49,7 +48,7 @@ class JobFragment : Fragment(R.layout.fragment_job) {
             layoutManager = LinearLayoutManager(activity)
             setHasFixedSize(true)
             addItemDecoration(object:
-                DividerItemDecoration(activity, LinearLayout.HORIZONTAL){})
+                DividerItemDecoration(activity, LinearLayout.VERTICAL){})
             adapter = jobAdapter
         }
         fetchData()
