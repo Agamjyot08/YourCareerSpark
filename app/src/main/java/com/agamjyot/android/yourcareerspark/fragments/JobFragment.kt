@@ -15,22 +15,23 @@ import com.agamjyot.android.yourcareerspark.adapter.JobAdapter
 import com.agamjyot.android.yourcareerspark.databinding.FragmentJobBinding
 import com.agamjyot.android.yourcareerspark.viewmodel.JobViewModel
 
-class JobFragment : Fragment() {
+class JobFragment : Fragment(R.layout.fragment_job) {
 
-    private lateinit var binding: FragmentJobBinding
+    private var _binding: FragmentJobBinding? = null
+    private val binding get() = _binding!!
     lateinit var viewModel: JobViewModel
-    private lateinit var adapter: JobAdapter
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-    }
+    private lateinit var jobAdapter: JobAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentJobBinding.inflate(inflater, container, false)
+        _binding = FragmentJobBinding.inflate(
+            inflater,
+            container,
+            false
+        )
+
         return binding.root
     }
 
@@ -42,14 +43,14 @@ class JobFragment : Fragment() {
     }
 
     private fun setupRecyclerView() {
-        adapter = JobAdapter()
+        jobAdapter = JobAdapter()
 
         binding.rvRemoteJobs.apply{
             layoutManager = LinearLayoutManager(activity)
             setHasFixedSize(true)
             addItemDecoration(object:
                 DividerItemDecoration(activity, LinearLayout.HORIZONTAL){})
-            adapter = adapter
+            adapter = jobAdapter
         }
         fetchData()
     }
@@ -57,7 +58,7 @@ class JobFragment : Fragment() {
     private fun fetchData() {
         viewModel.jobResult().observe(viewLifecycleOwner) {
             if (it != null) {
-                adapter.differ.submitList(it.jobs)
+                jobAdapter.differ.submitList(it.jobs)
             }
         }
     }
