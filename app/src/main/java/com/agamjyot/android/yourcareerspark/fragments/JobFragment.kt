@@ -5,7 +5,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
 import android.widget.ListAdapter
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.agamjyot.android.yourcareerspark.MainActivity
 import com.agamjyot.android.yourcareerspark.R
 import com.agamjyot.android.yourcareerspark.adapter.JobAdapter
 import com.agamjyot.android.yourcareerspark.databinding.FragmentJobBinding
@@ -33,6 +37,29 @@ class JobFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        viewModel = (activity as MainActivity).viewModel
+        setupRecyclerView()
+    }
+
+    private fun setupRecyclerView() {
+        adapter = JobAdapter()
+
+        binding.rvRemoteJobs.apply{
+            layoutManager = LinearLayoutManager(activity)
+            setHasFixedSize(true)
+            addItemDecoration(object:
+                DividerItemDecoration(activity, LinearLayout.HORIZONTAL){})
+            adapter = adapter
+        }
+        fetchData()
+    }
+
+    private fun fetchData() {
+        viewModel.jobResult().observe(viewLifecycleOwner) {
+            if (it != null) {
+                adapter.differ.submitList(it.jobs)
+            }
+        }
     }
 
 }
