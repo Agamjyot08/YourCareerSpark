@@ -18,7 +18,6 @@ class JobDetailsFragment : Fragment() {
     private lateinit var currentJob: Job
     private val args: JobDetailsFragmentArgs by navArgs()
 
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?

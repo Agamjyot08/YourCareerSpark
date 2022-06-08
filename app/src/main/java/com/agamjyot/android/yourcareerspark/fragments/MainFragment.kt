@@ -5,8 +5,13 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.agamjyot.android.yourcareerspark.MainActivity
 import com.agamjyot.android.yourcareerspark.R
+import com.agamjyot.android.yourcareerspark.adapter.JobAdapter
 import com.agamjyot.android.yourcareerspark.databinding.FragmentMainBinding
 import com.agamjyot.android.yourcareerspark.repository.JobRepository
 import com.agamjyot.android.yourcareerspark.viewmodel.JobViewModel
@@ -18,11 +23,7 @@ class MainFragment : Fragment() {
 
     private lateinit var binding: FragmentMainBinding
     lateinit var viewModel: JobViewModel
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-    }
+    private lateinit var jobAdapter: JobAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -34,20 +35,30 @@ class MainFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setupTabBar()
-
+        viewModel = (activity as MainActivity).viewModel
+        setupRecyclerView()
     }
 
-    private fun setupTabBar() {
-        val adapter = FragmentPagerItemAdapter(
-            childFragmentManager,
-            FragmentPagerItems.with(activity).add("Jobs", JobFragment::class.java)
-                .add("Search", SearchJobFragment::class.java)
-                .add("Saved", SavedJobFragment::class.java)
-                .create()
-        )
 
-        binding.viewpager.adapter = adapter
-        binding.viewpagertab.setViewPager(binding.viewpager)
+    private fun setupRecyclerView() {
+        jobAdapter = JobAdapter()
+
+        binding.rvRemoteJobs.apply{
+            layoutManager = LinearLayoutManager(activity)
+            setHasFixedSize(true)
+            addItemDecoration(object:
+                DividerItemDecoration(activity, LinearLayout.VERTICAL){})
+            adapter = jobAdapter
+        }
+        fetchData()
     }
+
+    private fun fetchData() {
+        viewModel.jobResult().observe(viewLifecycleOwner) {
+            if (it != null) {
+                jobAdapter.differ.submitList(it.jobs)
+            }
+        }
+    }
+
 }
