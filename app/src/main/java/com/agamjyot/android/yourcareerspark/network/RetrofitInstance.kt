@@ -1,11 +1,10 @@
 package com.agamjyot.android.yourcareerspark.network
 
-import com.agamjyot.android.yourcareerspark.models.JobResponse
 import com.agamjyot.android.yourcareerspark.utils.Constants.BASE_URL
+import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import okhttp3.OkHttpClient
 
 class RetrofitInstance {
 
