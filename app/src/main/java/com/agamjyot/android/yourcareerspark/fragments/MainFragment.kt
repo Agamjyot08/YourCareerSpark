@@ -42,7 +42,7 @@ class MainFragment : Fragment() {
         val adapter = FragmentPagerItemAdapter(
             childFragmentManager,
             FragmentPagerItems.with(activity).add("Jobs", JobFragment::class.java)
-                .add("Search", SearchJobFragment::class.java)
+//                .add("Search", SearchJobFragment::class.java)
                 .add("Saved", SavedJobFragment::class.java)
                 .create()
         )

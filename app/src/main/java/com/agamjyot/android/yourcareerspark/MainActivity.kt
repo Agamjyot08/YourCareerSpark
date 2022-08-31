@@ -5,6 +5,7 @@ import android.os.Bundle
 import androidx.lifecycle.ViewModelProvider
 import com.agamjyot.android.yourcareerspark.databinding.ActivityMainBinding
 import com.agamjyot.android.yourcareerspark.databinding.FragmentMainBinding
+import com.agamjyot.android.yourcareerspark.db.FavJobDatabase
 import com.agamjyot.android.yourcareerspark.repository.JobRepository
 import com.agamjyot.android.yourcareerspark.viewmodel.JobViewModel
 import com.agamjyot.android.yourcareerspark.viewmodel.JobViewModelFactory
@@ -26,7 +27,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setUpViewModel(){
-        val jobRepository = JobRepository()
+        val jobRepository = JobRepository(
+            FavJobDatabase(this)
+        )
         val viewModelProviderFactory = JobViewModelFactory(
             application,
             jobRepository
