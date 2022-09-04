@@ -2,17 +2,27 @@ package com.agamjyot.android.yourcareerspark.viewmodel
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.agamjyot.android.yourcareerspark.db.FavJob
+import com.agamjyot.android.yourcareerspark.models.JobResponse
+import com.agamjyot.android.yourcareerspark.network.Resource
 import com.agamjyot.android.yourcareerspark.repository.JobRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class JobViewModel(
-    app: Application,
-    private val jobRepository: JobRepository
-): AndroidViewModel(app) {
+@HiltViewModel
+class JobViewModel @Inject constructor (private var jobRepository: JobRepository): ViewModel() {
 
-    fun jobResult() = jobRepository.jobResult()
+    private val _getDataRes = MutableStateFlow<Resource<JobResponse>>(Resource.Initial)
+    val getDataRes: StateFlow<Resource<JobResponse>> = _getDataRes.asStateFlow()
+
+    fun getJobs() = viewModelScope.launch {
+        _getDataRes.value = Resource.Loading
+        _getDataRes.value = jobRepository.getJobResponse()
+    }
 
     fun addFavJob(job: FavJob) = viewModelScope.launch {
         jobRepository.addFavJob(job)
