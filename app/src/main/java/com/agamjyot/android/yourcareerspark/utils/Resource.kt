@@ -1,4 +1,4 @@
-package com.agamjyot.android.yourcareerspark.network
+package com.agamjyot.android.yourcareerspark.utils
 
 import okhttp3.ResponseBody
 

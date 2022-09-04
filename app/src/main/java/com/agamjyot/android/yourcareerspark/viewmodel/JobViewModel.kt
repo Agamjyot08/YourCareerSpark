@@ -1,12 +1,10 @@
 package com.agamjyot.android.yourcareerspark.viewmodel
 
-import android.app.Application
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.agamjyot.android.yourcareerspark.db.FavJob
 import com.agamjyot.android.yourcareerspark.models.JobResponse
-import com.agamjyot.android.yourcareerspark.network.Resource
+import com.agamjyot.android.yourcareerspark.utils.Resource
 import com.agamjyot.android.yourcareerspark.repository.JobRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*

@@ -5,19 +5,17 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.ViewModelProvider
-import com.agamjyot.android.yourcareerspark.R
+import androidx.fragment.app.viewModels
 import com.agamjyot.android.yourcareerspark.databinding.FragmentMainBinding
-import com.agamjyot.android.yourcareerspark.repository.JobRepository
 import com.agamjyot.android.yourcareerspark.viewmodel.JobViewModel
-import com.agamjyot.android.yourcareerspark.viewmodel.JobViewModelFactory
 import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItemAdapter
 import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItems
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainFragment : Fragment() {
 
     private lateinit var binding: FragmentMainBinding
-    lateinit var viewModel: JobViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

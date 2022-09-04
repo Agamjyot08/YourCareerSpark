@@ -11,7 +11,7 @@ import javax.inject.Inject
 class RetrofitInstance @Inject constructor(){
 
     companion object {
-        private const val BASE_URL = "https://run.mocky.io/v3/"
+        private const val BASE_URL = "https://remotive.com/"
     }
 
     fun <Api> buildApi(api: Class<Api>): Api {

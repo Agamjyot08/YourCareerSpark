@@ -1,5 +1,6 @@
 package com.agamjyot.android.yourcareerspark.network
 
+import com.agamjyot.android.yourcareerspark.utils.Resource
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import retrofit2.HttpException

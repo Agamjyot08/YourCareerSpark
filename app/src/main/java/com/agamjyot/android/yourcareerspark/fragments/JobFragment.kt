@@ -9,19 +9,17 @@ import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.agamjyot.android.yourcareerspark.MainActivity
 import com.agamjyot.android.yourcareerspark.R
 import com.agamjyot.android.yourcareerspark.adapter.JobAdapter
 import com.agamjyot.android.yourcareerspark.databinding.FragmentJobBinding
-import com.agamjyot.android.yourcareerspark.network.Resource
+import com.agamjyot.android.yourcareerspark.models.Job
+import com.agamjyot.android.yourcareerspark.utils.Resource
 import com.agamjyot.android.yourcareerspark.viewmodel.JobViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.flowWith
 import kotlinx.coroutines.launch
 import java.util.ArrayList
 
@@ -31,6 +29,8 @@ class JobFragment : Fragment(R.layout.fragment_job) {
     private lateinit var binding: FragmentJobBinding
     private val viewModel: JobViewModel by viewModels()
     private lateinit var jobAdapter: JobAdapter
+
+    private var list : ArrayList<Job> = ArrayList()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -57,7 +57,7 @@ class JobFragment : Fragment(R.layout.fragment_job) {
     }
 
     private fun setupRecyclerView() {
-        jobAdapter = JobAdapter()
+        jobAdapter = JobAdapter(list)
 
         binding.rvRemoteJobs.apply{
             layoutManager = LinearLayoutManager(activity)
@@ -66,7 +66,6 @@ class JobFragment : Fragment(R.layout.fragment_job) {
                 DividerItemDecoration(activity, LinearLayout.VERTICAL){})
             adapter = jobAdapter
         }
-        fetchData()
     }
 
     private fun setupObservable() {
@@ -76,19 +75,14 @@ class JobFragment : Fragment(R.layout.fragment_job) {
                     is Resource.Success -> {
                         try {
                             list.clear()
-                            list.addAll(it.value.card_groups)
+                            list.addAll(it.value.jobs)
                             Log.d("LogTag", list.toString())
-                            binding?.contextualCard?.recycler?.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
-                            binding?.contextualCard?.recycler?.adapter = ReAdapter
                         } catch (e: Exception) {
                             Toast.makeText(requireContext(), "oops..! Something went wrong.", Toast.LENGTH_SHORT).show()
                         }
                     }
-                    is Resource.Failure ->{
-                        this@JobFragment.handleApiError(requireContext(), it)
-                    }
-                    is Resource.Loading ->{
-                        showprogress()
+                    is Resource.Failure -> {
+                        Toast.makeText(requireContext(), "oops..! Something went wrong.", Toast.LENGTH_SHORT).show()
                     }
                     else -> {}
                 }
@@ -99,6 +93,14 @@ class JobFragment : Fragment(R.layout.fragment_job) {
     private fun Apicall() {
         viewModel.getJobs()
     }
+
+//    private fun fetchData() {
+//        viewModel.jobResult().observe(viewLifecycleOwner) {
+//            if (it != null) {
+//                jobAdapter.differ.submitList(it.jobs)
+//            }
+//        }
+//    }
 
 //    private fun fetchData() {
 //        lifecycleScope.launchWhenCreated {

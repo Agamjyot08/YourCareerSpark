@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.webkit.WebSettings
 import android.webkit.WebView
 import android.webkit.WebViewClient
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import com.agamjyot.android.yourcareerspark.MainActivity
 import com.agamjyot.android.yourcareerspark.R
@@ -16,13 +17,15 @@ import com.agamjyot.android.yourcareerspark.db.FavJob
 import com.agamjyot.android.yourcareerspark.models.Job
 import com.agamjyot.android.yourcareerspark.viewmodel.JobViewModel
 import com.google.android.material.snackbar.Snackbar
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class JobDetailsFragment : Fragment() {
 
     private lateinit var binding: FragmentJobDetailsBinding
     private lateinit var currentJob: Job
     private val args: JobDetailsFragmentArgs by navArgs()
-    private lateinit var viewModel: JobViewModel
+    private val viewModel: JobViewModel by viewModels()
 
 
     override fun onCreateView(
@@ -35,7 +38,6 @@ class JobDetailsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel = (activity as MainActivity).viewModel
 
         currentJob = args.job!!
         setupWebView()
