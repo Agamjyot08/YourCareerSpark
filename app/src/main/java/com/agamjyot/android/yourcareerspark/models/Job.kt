@@ -23,4 +23,4 @@ data class Job(
     val tags: List<String>?,
     val title: String?,
     val url: String?
-): Parcelable
+) : Parcelable

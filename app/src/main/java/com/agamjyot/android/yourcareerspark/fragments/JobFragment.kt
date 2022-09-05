@@ -2,12 +2,12 @@ package com.agamjyot.android.yourcareerspark.fragments
 
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -21,7 +21,6 @@ import com.agamjyot.android.yourcareerspark.viewmodel.JobViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
-import java.util.ArrayList
 
 @AndroidEntryPoint
 class JobFragment : Fragment(R.layout.fragment_job) {
@@ -30,7 +29,7 @@ class JobFragment : Fragment(R.layout.fragment_job) {
     private val viewModel: JobViewModel by viewModels()
     private lateinit var jobAdapter: JobAdapter
 
-    private var list : ArrayList<Job> = ArrayList()
+    private var list: ArrayList<Job> = ArrayList()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -48,41 +47,43 @@ class JobFragment : Fragment(R.layout.fragment_job) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-//        viewModel = (activity as MainActivity).viewModel
-        setupRecyclerView()
+        jobAdapter = JobAdapter(list)
 
-//        viewModel.jobResult()
         setupObservable()
         Apicall()
     }
 
-    private fun setupRecyclerView() {
-        jobAdapter = JobAdapter(list)
-
-        binding.rvRemoteJobs.apply{
-            layoutManager = LinearLayoutManager(activity)
-            setHasFixedSize(true)
-            addItemDecoration(object:
-                DividerItemDecoration(activity, LinearLayout.VERTICAL){})
-            adapter = jobAdapter
-        }
-    }
 
     private fun setupObservable() {
         lifecycleScope.launch {
-            viewModel.getDataRes.collectLatest{
+            viewModel.getDataRes.collectLatest {
                 when (it) {
                     is Resource.Success -> {
                         try {
                             list.clear()
                             list.addAll(it.value.jobs)
                             Log.d("LogTag", list.toString())
+                            binding.rvRemoteJobs.apply {
+                                layoutManager = LinearLayoutManager(activity)
+                                setHasFixedSize(true)
+                                addItemDecoration(object :
+                                    DividerItemDecoration(activity, LinearLayout.VERTICAL) {})
+                                adapter = jobAdapter
+                            }
                         } catch (e: Exception) {
-                            Toast.makeText(requireContext(), "oops..! Something went wrong.", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(
+                                requireContext(),
+                                "oops..! Something went wrong.",
+                                Toast.LENGTH_SHORT
+                            ).show()
                         }
                     }
                     is Resource.Failure -> {
-                        Toast.makeText(requireContext(), "oops..! Something went wrong.", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(
+                            requireContext(),
+                            "oops..! Something went wrong.",
+                            Toast.LENGTH_SHORT
+                        ).show()
                     }
                     else -> {}
                 }
@@ -93,31 +94,5 @@ class JobFragment : Fragment(R.layout.fragment_job) {
     private fun Apicall() {
         viewModel.getJobs()
     }
-
-//    private fun fetchData() {
-//        viewModel.jobResult().observe(viewLifecycleOwner) {
-//            if (it != null) {
-//                jobAdapter.differ.submitList(it.jobs)
-//            }
-//        }
-//    }
-
-//    private fun fetchData() {
-//        lifecycleScope.launchWhenCreated {
-//            viewModel.infoState.collectLatest {
-//
-//                when (it) {
-//                    is Resource.Success -> {
-//                        jobAdapter.submitList(it.data?.jobs)
-//                    }
-//
-//                    is Resource.Error -> {
-//                        Toast.makeText(context, it.message, Toast.LENGTH_LONG).show()
-//                    }
-//                    else -> {}
-//                }
-//            }
-//        }
-//    }
 
 }

@@ -15,8 +15,8 @@ abstract class FavJobDatabase : RoomDatabase() {
         private var instance: FavJobDatabase? = null
         private val LOCK = Any()
 
-        operator fun invoke(context: Context) = instance?: synchronized(LOCK) {
-            instance?: createDatabase(context).also { instance = it }
+        operator fun invoke(context: Context) = instance ?: synchronized(LOCK) {
+            instance ?: createDatabase(context).also { instance = it }
         }
 
         private fun createDatabase(context: Context) =

@@ -1,9 +1,8 @@
 package com.agamjyot.android.yourcareerspark
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import com.agamjyot.android.yourcareerspark.databinding.ActivityMainBinding
-import com.agamjyot.android.yourcareerspark.viewmodel.JobViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

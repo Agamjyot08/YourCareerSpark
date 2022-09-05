@@ -14,7 +14,8 @@ import com.agamjyot.android.yourcareerspark.fragments.MainFragmentDirections
 import com.agamjyot.android.yourcareerspark.models.Job
 import com.bumptech.glide.Glide
 
-class FavJobAdapter constructor(private val itemClick: OnItemClickListener) : RecyclerView.Adapter<FavJobAdapter.JobViewHolder>() {
+class FavJobAdapter constructor(private val itemClick: OnItemClickListener) :
+    RecyclerView.Adapter<FavJobAdapter.JobViewHolder>() {
 
     private var binding: JobLayoutItemBinding? = null
 
@@ -53,7 +54,7 @@ class FavJobAdapter constructor(private val itemClick: OnItemClickListener) : Re
             binding?.tvDate?.text = date?.get(0)
 
             Glide.with(this).load(currentJob.companyLogoUrl).into(binding?.ivCompanyLogo!!)
-        }.setOnClickListener {view ->
+        }.setOnClickListener { view ->
 
             val tags = arrayListOf<String>()
             val job = Job(
@@ -82,7 +83,7 @@ class FavJobAdapter constructor(private val itemClick: OnItemClickListener) : Re
     }
 
     override fun getItemCount(): Int {
-        return  differ.currentList.size
+        return differ.currentList.size
     }
 
     interface OnItemClickListener {

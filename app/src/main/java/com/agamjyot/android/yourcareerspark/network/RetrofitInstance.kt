@@ -8,11 +8,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
-class RetrofitInstance @Inject constructor(){
-
-    companion object {
-        private const val BASE_URL = "https://remotive.com/"
-    }
+class RetrofitInstance @Inject constructor() {
 
     fun <Api> buildApi(api: Class<Api>): Api {
 

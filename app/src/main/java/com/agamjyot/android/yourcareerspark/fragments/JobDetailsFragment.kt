@@ -1,17 +1,14 @@
 package com.agamjyot.android.yourcareerspark.fragments
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.webkit.WebSettings
-import android.webkit.WebView
 import android.webkit.WebViewClient
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
-import com.agamjyot.android.yourcareerspark.MainActivity
-import com.agamjyot.android.yourcareerspark.R
 import com.agamjyot.android.yourcareerspark.databinding.FragmentJobDetailsBinding
 import com.agamjyot.android.yourcareerspark.db.FavJob
 import com.agamjyot.android.yourcareerspark.models.Job
@@ -80,12 +77,11 @@ class JobDetailsFragment : Fragment() {
             cacheMode = WebSettings.LOAD_DEFAULT
             setSupportZoom(false)
             builtInZoomControls = false
-            displayZoomControls= false
+            displayZoomControls = false
             textZoom = 100
             blockNetworkImage = false
             loadsImagesAutomatically = true
         }
-
 
 
     }

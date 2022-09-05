@@ -11,7 +11,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.agamjyot.android.yourcareerspark.MainActivity
 import com.agamjyot.android.yourcareerspark.adapter.FavJobAdapter
 import com.agamjyot.android.yourcareerspark.databinding.FragmentSavedJobBinding
 import com.agamjyot.android.yourcareerspark.db.FavJob
@@ -49,7 +48,7 @@ class SavedJobFragment : Fragment(), FavJobAdapter.OnItemClickListener {
         binding.rvJobsSaved.apply {
             layoutManager = LinearLayoutManager(activity)
             setHasFixedSize(true)
-            addItemDecoration(object: DividerItemDecoration(
+            addItemDecoration(object : DividerItemDecoration(
                 activity, LinearLayout.VERTICAL
             ) {})
             adapter = favAdapter
@@ -79,7 +78,7 @@ class SavedJobFragment : Fragment(), FavJobAdapter.OnItemClickListener {
         AlertDialog.Builder(activity).apply {
             setTitle("Delete Job")
             setMessage("Are you sure?")
-            setPositiveButton("Delete") {_,_->
+            setPositiveButton("Delete") { _, _ ->
                 viewModel.deleteFavJob(job)
                 Toast.makeText(activity, "Deleted", Toast.LENGTH_SHORT).show()
             }

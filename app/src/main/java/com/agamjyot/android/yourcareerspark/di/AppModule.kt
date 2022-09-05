@@ -2,7 +2,6 @@ package com.agamjyot.android.yourcareerspark.di
 
 import android.content.Context
 import androidx.room.Room
-import com.agamjyot.android.yourcareerspark.db.FavJobDao
 import com.agamjyot.android.yourcareerspark.db.FavJobDatabase
 import com.agamjyot.android.yourcareerspark.network.JobService
 import com.agamjyot.android.yourcareerspark.network.RetrofitInstance

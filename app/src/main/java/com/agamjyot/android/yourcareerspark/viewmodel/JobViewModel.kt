@@ -4,15 +4,17 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.agamjyot.android.yourcareerspark.db.FavJob
 import com.agamjyot.android.yourcareerspark.models.JobResponse
-import com.agamjyot.android.yourcareerspark.utils.Resource
 import com.agamjyot.android.yourcareerspark.repository.JobRepository
+import com.agamjyot.android.yourcareerspark.utils.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class JobViewModel @Inject constructor (private var jobRepository: JobRepository): ViewModel() {
+class JobViewModel @Inject constructor(private var jobRepository: JobRepository) : ViewModel() {
 
     private val _getDataRes = MutableStateFlow<Resource<JobResponse>>(Resource.Initial)
     val getDataRes: StateFlow<Resource<JobResponse>> = _getDataRes.asStateFlow()

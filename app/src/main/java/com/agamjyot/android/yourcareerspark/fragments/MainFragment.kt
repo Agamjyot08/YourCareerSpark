@@ -1,13 +1,11 @@
 package com.agamjyot.android.yourcareerspark.fragments
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.Fragment
 import com.agamjyot.android.yourcareerspark.databinding.FragmentMainBinding
-import com.agamjyot.android.yourcareerspark.viewmodel.JobViewModel
 import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItemAdapter
 import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItems
 import dagger.hilt.android.AndroidEntryPoint
